@@ -12,14 +12,10 @@
     "@fastify/rate-limit": "^9.1.0",
     "@fastify/type-provider-typebox": "^4.0.0",
     "@prisma/client": "^5.9.1",
-    "@sinclair/typebox": "^0.32.13",
-    "@sinclair/typebox-codegen": "^0.9.7",
     "dotenv": "^16.4.1",
     "fastify": "^4.26.0",
     "fastify-plugin": "^4.5.1",
     "fastify-type-provider-zod": "^1.1.9",
-    "i": "^0.3.7",
-    "npm": "^10.4.0",
     "zod-prisma-types": "^3.1.6"
   },
   "devDependencies": {
@@ -29,7 +25,6 @@
     "nodemon": "^3.0.3",
     "prettier": "^3.2.4",
     "prisma": "^5.9.1",
-    "prisma-json-schema-generator": "^5.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
