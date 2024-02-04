@@ -1,32 +1,16 @@
 import { FastifyInstance } from 'fastify';
-import { Prisma } from '@prisma/client';
-import { z } from 'zod';
-
-import { TodoSchema } from '../../types/zod-db-models';
-
-const TodoSchemaPost = TodoSchema.omit({ id: true });
-type TodoT = z.infer<typeof TodoSchemaPost>;
+import { CreateTodoSchema as schema } from '../../schemas/todo';
+import { CreateTodo as handler } from '../../controllers/todo';
+import { TodoCreateT } from '../../types/todo';
 
 export default async function routes(fastify: FastifyInstance) {
-  fastify.post<{ Body: TodoT }>(
-    '/',
-    {
-      schema: {
-        body: TodoSchemaPost
-      }
-    },
-    async (req) => {
-      const { title, description } = req.body;
-      const data: Prisma.TodoCreateInput = {
-        title,
-        description
-      };
+  const method = 'POST';
+  const url = '/';
 
-      try {
-        await fastify.prisma.todo.create({ data });
-      } catch (err) {
-        throw err;
-      }
-    }
-  );
+  fastify.route<{ Body: TodoCreateT }>({
+    method,
+    url,
+    schema,
+    handler
+  });
 }

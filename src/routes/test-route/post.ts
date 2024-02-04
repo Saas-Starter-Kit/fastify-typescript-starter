@@ -1,4 +1,4 @@
-import { FastifyInstance } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
 const Body = z.object({
@@ -9,15 +9,20 @@ const Body = z.object({
 type bodyType = z.infer<typeof Body>;
 
 export default async function routes(fastify: FastifyInstance) {
-  fastify.post<{ Body: bodyType }>(
-    '/',
-    {
-      schema: {
-        body: Body
-      }
-    },
-    async (req) => {
-      console.log(req.body);
-    }
-  );
+  const method = 'POST';
+  const url = '/';
+  const schema = {
+    body: Body
+  };
+
+  const handler = async (req: FastifyRequest) => {
+    console.log(req.body);
+  };
+
+  fastify.route<{ Body: bodyType }>({
+    method,
+    url,
+    schema,
+    handler
+  });
 }

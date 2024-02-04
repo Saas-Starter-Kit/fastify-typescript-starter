@@ -1,27 +1,11 @@
 import { FastifyInstance } from 'fastify';
-import { Todo, TodoSchema } from '../../types/zod-db-models';
-import { z } from 'zod';
+import { Todo } from '../../types/zod-db-models';
+import { GetTodos as handler } from '../../controllers/todo';
+import { GetTodosSchema as schema } from '../../schemas/todo';
 
 export default async function routes(fastify: FastifyInstance) {
-  fastify.get<{ Reply: Todo[] }>(
-    '/',
-    {
-      schema: {
-        response: {
-          '2xx': z.array(TodoSchema)
-        }
-      }
-    },
-    async () => {
-      try {
-        const todos = await fastify.prisma.todo.findMany({
-          take: 10
-        });
+  const method = 'GET';
+  const url = '/';
 
-        return todos;
-      } catch (err) {
-        throw err;
-      }
-    }
-  );
+  fastify.route<{ Reply: Todo[] }>({ method, url, schema, handler });
 }
