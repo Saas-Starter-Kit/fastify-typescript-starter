@@ -1,1 +1,1 @@
-# fastify-typescript-starter
+# fastify

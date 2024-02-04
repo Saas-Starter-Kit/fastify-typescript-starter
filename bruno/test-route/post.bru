@@ -1,0 +1,22 @@
+meta {
+  name: post
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:4000/test-route
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "testRequired": "test",
+    "test": "test"
+  }
+}
+
+body:form-urlencoded {
+  test: test
+}
