@@ -1,14 +1,14 @@
 import { FastifyInstance } from 'fastify';
-import { TodoT, TodoModel } from '../../types/db-models';
-import { Type } from '@sinclair/typebox';
+import { Todo, TodoSchema } from '../../types/zod-db-models';
+import { z } from 'zod';
 
 export default async function routes(fastify: FastifyInstance) {
-  fastify.get<{ Reply: TodoT[] }>(
+  fastify.get<{ Reply: Todo[] }>(
     '/',
     {
       schema: {
         response: {
-          '2xx': Type.Array(TodoModel)
+          '2xx': z.array(TodoSchema)
         }
       }
     },

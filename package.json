@@ -17,8 +17,10 @@
     "dotenv": "^16.4.1",
     "fastify": "^4.26.0",
     "fastify-plugin": "^4.5.1",
+    "fastify-type-provider-zod": "^1.1.9",
     "i": "^0.3.7",
-    "npm": "^10.4.0"
+    "npm": "^10.4.0",
+    "zod-prisma-types": "^3.1.6"
   },
   "devDependencies": {
     "@types/node": "^20.11.16",

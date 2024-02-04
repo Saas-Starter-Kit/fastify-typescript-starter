@@ -1,13 +1,12 @@
 import { FastifyInstance } from 'fastify';
+import { z } from 'zod';
 
-import { Type, Static } from '@sinclair/typebox';
-
-const Body = Type.Object({
-  testRequired: Type.String(),
-  test: Type.Optional(Type.String())
+const Body = z.object({
+  testRequired: z.string(),
+  test: z.string()
 });
 
-type bodyType = Static<typeof Body>;
+type bodyType = z.infer<typeof Body>;
 
 export default async function routes(fastify: FastifyInstance) {
   fastify.post<{ Body: bodyType }>(

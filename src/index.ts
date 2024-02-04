@@ -3,10 +3,14 @@ import fastify from 'fastify';
 import AutoLoad from '@fastify/autoload';
 import fastifyEnv from '@fastify/env';
 import { options } from './types/envConfig';
-import { TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
+import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
 import path from 'path';
 
-export const server = fastify({ logger: true }).withTypeProvider<TypeBoxTypeProvider>();
+export const server = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
+
+// Add schema validator and serializer
+server.setValidatorCompiler(validatorCompiler);
+server.setSerializerCompiler(serializerCompiler);
 
 const register = async () => {
   server.register(fastifyEnv, options);

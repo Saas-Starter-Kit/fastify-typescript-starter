@@ -1,17 +1,18 @@
 import { FastifyInstance } from 'fastify';
-import { TodoModel } from '../../types/db-models';
 import { Prisma } from '@prisma/client';
-import { Type, Static } from '@sinclair/typebox';
+import { z } from 'zod';
 
-const TodoModelPost = Type.Omit(TodoModel, ['id']);
-export type TodoT = Static<typeof TodoModelPost>;
+import { TodoSchema } from '../../types/zod-db-models';
+
+const TodoSchemaPost = TodoSchema.omit({ id: true });
+type TodoT = z.infer<typeof TodoSchemaPost>;
 
 export default async function routes(fastify: FastifyInstance) {
   fastify.post<{ Body: TodoT }>(
     '/',
     {
       schema: {
-        body: TodoModelPost
+        body: TodoSchemaPost
       }
     },
     async (req) => {

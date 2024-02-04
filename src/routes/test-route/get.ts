@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
-import { Type, Static } from '@sinclair/typebox';
+import { z } from 'zod';
 
-const Res = Type.Object({
-  hello: Type.String()
+const Res = z.object({
+  hello: z.string()
 });
 
-type resType = Static<typeof Res>;
+type resType = z.infer<typeof Res>;
 
 export default async function routes(fastify: FastifyInstance) {
   fastify.get<{ Reply: resType }>(
