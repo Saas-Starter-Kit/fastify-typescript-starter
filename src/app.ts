@@ -6,7 +6,7 @@ import { options } from './types/envConfig';
 import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
 import path from 'path';
 
-const build = () => {
+export function build() {
   const app = fastify({ logger: true }).withTypeProvider<ZodTypeProvider>();
 
   // Add schema validator and serializer
@@ -24,6 +24,4 @@ const build = () => {
   });
 
   return app;
-};
-
-export default build;
+}

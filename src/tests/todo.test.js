@@ -1,7 +1,7 @@
 const { test } = require('tap');
 const { build } = require('../app.ts');
 
-test('GET /example returns status 200', async (t) => {
+test('GET /todo returns status 200', async (t) => {
   const app = build();
 
   t.after(async () => {
@@ -10,14 +10,13 @@ test('GET /example returns status 200', async (t) => {
 
   const res = await app.inject({
     method: 'GET',
-    url: '/example'
+    url: '/todo'
   });
 
   t.matchStrict(res.statusCode, 200);
-  t.matchStrict(JSON.parse(res.payload), { hello: 'world' });
 });
 
-test('POST /example returns status 200', async (t) => {
+test('POST /todo returns status 200', async (t) => {
   const app = build();
 
   t.after(async () => {
@@ -26,17 +25,17 @@ test('POST /example returns status 200', async (t) => {
 
   const res = await app.inject({
     method: 'POST',
-    url: '/example',
+    url: '/todo',
     payload: {
-      testRequired: 'test',
-      test: 'test'
+      title: 'test',
+      description: 'test'
     }
   });
 
   t.matchStrict(res.statusCode, 200);
 });
 
-test('POST /example returns status 400', async (t) => {
+test('POST /todo returns status 400', async (t) => {
   const app = build();
 
   t.after(async () => {
@@ -45,10 +44,10 @@ test('POST /example returns status 400', async (t) => {
 
   const res = await app.inject({
     method: 'POST',
-    url: '/example',
+    url: '/todo',
     payload: {
-      //testRequired: 'test',
-      test: 'test'
+      //  title: 'test',
+      description: 'test'
     }
   });
 
