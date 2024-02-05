@@ -12,7 +12,7 @@ import type { Prisma } from '@prisma/client';
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const UserScalarFieldEnumSchema = z.enum(['id','email']);
+export const UserScalarFieldEnumSchema = z.enum(['id','email','password']);
 
 export const TodoScalarFieldEnumSchema = z.enum(['id','title','description']);
 
@@ -30,6 +30,7 @@ export const QueryModeSchema = z.enum(['default','insensitive']);
 export const UserSchema = z.object({
   id: z.string().cuid(),
   email: z.string(),
+  password: z.string(),
 })
 
 export type User = z.infer<typeof UserSchema>

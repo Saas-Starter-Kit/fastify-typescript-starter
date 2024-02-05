@@ -9,6 +9,7 @@ declare module 'fastify' {
       ORIGIN: string;
       PORT: number;
       DATABASE_URL: string;
+      AUTH_SECRET: string;
     };
   }
 }
@@ -17,6 +18,7 @@ interface Env {
   PORT: number;
   ORIGIN: string;
   DATABASE_URL: string;
+  AUTH_SECRET: string;
 }
 
 const schema: JSONSchemaType<Env> = {
@@ -32,6 +34,9 @@ const schema: JSONSchemaType<Env> = {
       default: 4000
     },
     DATABASE_URL: {
+      type: 'string'
+    },
+    AUTH_SECRET: {
       type: 'string'
     }
   }
