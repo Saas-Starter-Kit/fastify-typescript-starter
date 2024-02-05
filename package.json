@@ -1,8 +1,8 @@
 {
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node ./dist/index.js",
-    "dev": "nodemon ./src/index.ts"
+    "start": "node ./dist/server.js",
+    "dev": "nodemon ./src/server.ts"
   },
   "dependencies": {
     "@fastify/autoload": "^5.8.0",
