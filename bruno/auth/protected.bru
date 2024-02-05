@@ -1,0 +1,15 @@
+meta {
+  name: protected
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:4000/auth/protected
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJfaWQiOiJjbHM4NnQwcDUwMDAwMWRwZzlxdm81dm9kIn0sImlhdCI6MTcwNzA5MjYyMn0.gtMufxmdD_S_KFTdJp-1Ic1kyHDzs5jKQdWqlPlXoDs
+}

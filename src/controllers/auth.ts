@@ -26,7 +26,7 @@ export async function SignUp(this: FastifyInstance, request: AuthBodyI, reply: F
     });
 
     const token = this.jwt.sign({ payload: { user_id: createUser.id } });
-    return token;
+    return { token };
   } catch (err) {
     throw err;
   }
@@ -48,7 +48,7 @@ export async function Login(this: FastifyInstance, request: AuthBodyI, reply: Fa
     }
 
     const token = this.jwt.sign({ payload: { user_id: user.id } });
-    return token;
+    return { token };
   } catch (err) {
     throw err;
   }
