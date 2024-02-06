@@ -12,6 +12,8 @@
     "@fastify/helmet": "^11.1.1",
     "@fastify/jwt": "^8.0.0",
     "@fastify/rate-limit": "^9.1.0",
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^2.1.0",
     "@fastify/type-provider-typebox": "^4.0.0",
     "@prisma/client": "^5.9.1",
     "bcrypt": "^5.1.1",
