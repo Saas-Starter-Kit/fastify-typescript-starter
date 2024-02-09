@@ -17,7 +17,7 @@ Fastify, Typescript, Prisma, and Zod.
 
 ## 📜 Getting Started
 
-Setup simply requires substituing a database connection url and a user defined auth secret to run the project with `npm run dev`
+Setup simply requires substituing a database connection url and a user defined auth secret in  the `.env` file to run the project with `npm run dev`
 
 #### Bruno
 Bruno is used for the API client as an alternative to Postman.
