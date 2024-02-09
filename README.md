@@ -13,7 +13,7 @@ Fastify, Typescript, Prisma, and Zod.
 -  ✅  Jwt Auth
 -  ✅  Testing with Tap
 
-
+<br />
 
 ## 📜 Getting Started
 
