@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node ./dist/server.js",
+    "start": "npx prisma generate && node ./dist/server.js",
     "dev": "nodemon ./src/server.ts",
     "test": "tap ./src/tests/*"
   },
