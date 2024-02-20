@@ -5,12 +5,11 @@ COPY . /usr/src/app
 
 COPY package.json package-lock.json ./
 COPY src ./src
-COPY prisma ./prisma
 
 RUN npm install
 RUN npm run build
 COPY . .
 
-EXPOSE 4000
+EXPOSE 80
 
 CMD "npm" "start"
