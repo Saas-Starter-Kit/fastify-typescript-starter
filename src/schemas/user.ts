@@ -1,13 +1,16 @@
 import { z } from 'zod';
-import { TodoSchema } from '../types/zod-db-models';
-import { UserCreateSchema } from '../types/user';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { users } from '../drizzle/schema';
+
+export const insertUserSchema = createInsertSchema(users);
+export const selectUserSchema = createSelectSchema(users);
 
 export const GetTodosSchema = {
   response: {
-    '2xx': z.array(TodoSchema)
+    '2xx': z.array(selectUserSchema)
   }
 };
 
 export const CreateUserSchema = {
-  body: UserCreateSchema
+  body: insertUserSchema
 };

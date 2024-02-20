@@ -1,33 +1,30 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { Prisma } from '@prisma/client';
-import { TodoCreateT } from '../types/todo';
+import { todo } from '../types/todo';
+import { todos } from '../drizzle/schema';
 
 export async function GetTodos(this: FastifyInstance) {
   try {
-    const todos = await this.prisma.todo.findMany({
-      take: 10
-    });
-
-    return todos;
+    const todoList = await this.db.select().from(todos).limit(10);
+    return todoList;
   } catch (err) {
     throw err;
   }
 }
 
 interface CreateTodoRequestI extends FastifyRequest {
-  body: TodoCreateT;
+  body: todo;
 }
 
 export async function CreateTodo(this: FastifyInstance, req: CreateTodoRequestI) {
   const { title, description } = req.body;
 
-  const data: Prisma.TodoCreateInput = {
+  const data: todo = {
     title,
     description
   };
 
   try {
-    await this.prisma.todo.create({ data });
+    await this.db.insert(todos).values(data);
   } catch (err) {
     throw err;
   }

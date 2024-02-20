@@ -1,5 +1,3 @@
-import { z } from 'zod';
-import { TodoSchema } from '../types/zod-db-models';
+import { todos } from '../drizzle/schema';
 
-export const TodoCreateSchema = TodoSchema.omit({ id: true });
-export type TodoCreateT = z.infer<typeof TodoCreateSchema>;
+export type todo = typeof todos.$inferInsert;

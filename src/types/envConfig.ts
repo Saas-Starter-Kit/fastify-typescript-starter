@@ -2,6 +2,7 @@ import { JSONSchemaType } from 'env-schema';
 import { FastifyEnvOptions } from '@fastify/env';
 import { FastifyRequest, FastifyReply } from 'fastify'; // eslint-disable-line
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 declare module 'fastify' {

@@ -1,5 +1,3 @@
-import { z } from 'zod';
-import { UserSchema } from '../types/zod-db-models';
+import { users } from '../drizzle/schema';
 
-export const UserCreateSchema = UserSchema.omit({ id: true });
-export type UserCreateT = z.infer<typeof UserCreateSchema>;
+export type user = typeof users.$inferInsert;

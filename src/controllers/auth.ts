@@ -1,31 +1,31 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import { CheckPassword, HashedPassword } from '../utils/helpers';
-import { Prisma } from '@prisma/client';
-import { UserCreateT } from '../types/user';
-
+import { user } from '../types/user';
+import { users } from '../drizzle/schema';
+import { eq } from 'drizzle-orm';
 interface AuthBodyI extends FastifyRequest {
-  body: UserCreateT;
+  body: user;
 }
 
 export async function SignUp(this: FastifyInstance, request: AuthBodyI, reply: FastifyReply) {
   try {
     const { email, password } = request.body;
 
-    const user = await this.prisma.user.findUnique({ where: { email: email } });
-    if (user) {
+    const user = await this.db.select().from(users).where(eq(users.email, email));
+
+    if (user[0]) {
       reply.code(409).send(new Error('User Already Exists'));
     }
 
     const hashPass = HashedPassword(password);
-    const data: Prisma.UserCreateInput = {
+    const data: user = {
       email,
       password: hashPass
     };
-    const createUser = await this.prisma.user.create({
-      data
-    });
 
-    const token = this.jwt.sign({ payload: { user_id: createUser.id } });
+    const createUser = await this.db.insert(users).values(data).returning({ id: users.id });
+
+    const token = this.jwt.sign({ payload: { user_id: createUser[0].id } });
     return { token };
   } catch (err) {
     throw err;
@@ -36,18 +36,19 @@ export async function Login(this: FastifyInstance, request: AuthBodyI, reply: Fa
   try {
     const { email, password } = request.body;
 
-    const user = await this.prisma.user.findUnique({ where: { email: email } });
+    const user = await this.db.select().from(users).where(eq(users.email, email));
+
     if (!user) {
       reply.code(400).send(new Error('User Does Not Exist'));
       return;
     }
 
-    const checkPass = CheckPassword(password, user.password);
+    const checkPass = CheckPassword(password, user[0].password);
     if (!checkPass) {
       reply.code(400).send(new Error('Invalid Credentials'));
     }
 
-    const token = this.jwt.sign({ payload: { user_id: user.id } });
+    const token = this.jwt.sign({ payload: { user_id: user[0].id } });
     return { token };
   } catch (err) {
     throw err;
