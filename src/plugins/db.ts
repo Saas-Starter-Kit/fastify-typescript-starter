@@ -6,7 +6,7 @@ import { Client } from 'pg';
 import path from 'path';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
-// Use TypeScript module augmentation to declare the type of server.prisma to be PrismaClient
+// Use TypeScript module augmentation to declare the type of server.db to be Drizzle Client
 declare module 'fastify' {
   interface FastifyInstance {
     db: NodePgDatabase<Record<string, never>>;
