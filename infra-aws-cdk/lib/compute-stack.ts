@@ -44,27 +44,8 @@ export class ComputeStack extends Stack {
     const dbHost = process.env.DB_HOST || 'dbHost';
 
     const dockerAsset = new DockerImageAsset(this, 'MyBuildImage', {
-      directory: path.join(
-        __dirname,
-        '..',
-        '..',
-        'fastify-microservices',
-        'fastify-typescript-microservices-starter'
-      )
+      directory: path.join(__dirname, '..')
     });
-
-    //const taskDefinition = new ecs.FargateTaskDefinition(this, 'TaskDef');
-    //const container = taskDefinition.addContainer('web', {
-    //  image: ecs.ContainerImage.fromDockerImageAsset(dockerAsset)
-    //});
-
-    //// Create Service
-    //const service = new ecs.FargateService(this, 'Service', {
-    //  cluster,
-    //  taskDefinition,
-    //  assignPublicIp: true,
-    //  desiredCount: 2
-    //});
 
     const loadBalancedFargateService = new ecs_patterns.ApplicationLoadBalancedFargateService(
       this,
@@ -74,7 +55,7 @@ export class ComputeStack extends Stack {
         desiredCount: 1,
         taskImageOptions: {
           image: ecs.ContainerImage.fromDockerImageAsset(dockerAsset)
-          //containerPort: 80
+          containerPort: 80
           //taskRole: role
           //executionRole: role,
           //secrets: {
