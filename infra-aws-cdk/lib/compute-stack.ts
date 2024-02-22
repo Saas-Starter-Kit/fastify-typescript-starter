@@ -28,7 +28,7 @@ export class ComputeStack extends Stack {
     });
 
     const dockerAsset = new DockerImageAsset(this, 'MyBuildImage', {
-      directory: path.join(__dirname, '../../')
+      directory: path.join(__dirname, '..', '..')
     });
 
     const AUTH_SECRET = process.env.AUTH_SECRET || 'testsec123';
