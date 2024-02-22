@@ -28,7 +28,7 @@ export class ComputeStack extends Stack {
     });
 
     const dockerAsset = new DockerImageAsset(this, 'MyBuildImage', {
-      directory: path.join(__dirname, '..', '..', 'db-test')
+      directory: path.join(__dirname, '../../')
     });
 
     const DATABASE_URL = process.env.DATABASE_URL || '';
