@@ -31,13 +31,12 @@ export class ComputeStack extends Stack {
       directory: path.join(__dirname, '../../')
     });
 
-    const DATABASE_URL = process.env.DATABASE_URL || '';
-    const AUTH_SECRET = process.env.AUTH_SECRET || '';
+    const AUTH_SECRET = process.env.AUTH_SECRET || 'testsec123';
 
-    const DB_NAME = process.env.DB_NAME || 'postgresDB';
-    const DB_USERNAME = process.env.DB_USERNAME || 'postgresUser';
+    const DB_NAME = process.env.DB_NAME || 'postgres';
+    const DB_USERNAME = process.env.DB_USERNAME || 'postgres';
     const DB_PORT = process.env.DB_PORT || '5432';
-    const DB_HOST = process.env.DB_HOST || 'dbHost';
+    const DB_HOST = process.env.DB_HOST || 'db_host123';
     const DB_PASSWORD = process.env.DB_PASSWORD || 'testpass123';
 
     const loadBalancedFargateService = new ecs_patterns.ApplicationLoadBalancedFargateService(
@@ -54,7 +53,6 @@ export class ComputeStack extends Stack {
           //  DB_PASSWORD: ecs.Secret.fromSecretsManager(dbSecret)
           //},
           environment: {
-            DATABASE_URL,
             AUTH_SECRET,
             DB_HOST,
             DB_PORT,

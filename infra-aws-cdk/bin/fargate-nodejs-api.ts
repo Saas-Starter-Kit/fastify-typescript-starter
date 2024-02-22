@@ -4,11 +4,11 @@ require('dotenv').config();
 
 import * as cdk from 'aws-cdk-lib';
 import { VpcStack } from '../lib/vpc-stack';
-import { RolesStack } from '../lib/roles-stack';
-//import { SecretsStack } from '../lib/secrets-stack';
 import { ComputeStack } from '../lib/compute-stack';
 import { DatabaseStack } from '../lib/database-stack';
-import { SGStack } from '../lib/sg-stack';
+//import { SGStack } from '../lib/sg-stack';
+//import { RolesStack } from '../lib/roles-stack';
+//import { SecretsStack } from '../lib/secrets-stack';
 
 const app = new cdk.App();
 
