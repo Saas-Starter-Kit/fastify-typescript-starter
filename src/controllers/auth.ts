@@ -3,6 +3,8 @@ import { CheckPassword, HashedPassword } from '../utils/helpers';
 import { user } from '../types/user';
 import { users } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
+import { db } from '../drizzle/db';
+
 interface AuthBodyI extends FastifyRequest {
   body: user;
 }
@@ -11,7 +13,7 @@ export async function SignUp(this: FastifyInstance, request: AuthBodyI, reply: F
   try {
     const { email, password } = request.body;
 
-    const user = await this.db.select().from(users).where(eq(users.email, email));
+    const user = await db.select().from(users).where(eq(users.email, email));
 
     if (user[0]) {
       reply.code(409).send(new Error('User Already Exists'));
@@ -23,7 +25,7 @@ export async function SignUp(this: FastifyInstance, request: AuthBodyI, reply: F
       password: hashPass
     };
 
-    const createUser = await this.db.insert(users).values(data).returning({ id: users.id });
+    const createUser = await db.insert(users).values(data).returning({ id: users.id });
 
     const token = this.jwt.sign({ payload: { user_id: createUser[0].id } });
     return { token };
@@ -36,7 +38,7 @@ export async function Login(this: FastifyInstance, request: AuthBodyI, reply: Fa
   try {
     const { email, password } = request.body;
 
-    const user = await this.db.select().from(users).where(eq(users.email, email));
+    const user = await db.select().from(users).where(eq(users.email, email));
 
     if (!user) {
       reply.code(400).send(new Error('User Does Not Exist'));

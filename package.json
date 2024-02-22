@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node ./dist/server.js",
+    "start": "node ./dist/src/server.js",
     "dev": "nodemon ./src/server.ts",
     "test": "tap ./src/tests/*",
     "migrate": "npx drizzle-kit push:pg",

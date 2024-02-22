@@ -2,7 +2,7 @@ import { build } from './app';
 
 const server = build();
 
-const port = Number(process.env.PORT) || 4000;
+const port = Number(process.env.PORT) || 80;
 const host = process.env.HOST || '0.0.0.0';
 
 export default function start() {

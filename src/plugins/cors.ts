@@ -7,10 +7,10 @@ const metadata: PluginMetadata = {
 };
 
 async function plugin(fastify: FastifyInstance) {
-  const origin = [process.env.ORIGIN || 'http://127.0.0.1:4000'];
+  //const origin = [process.env.ORIGIN || 'http://127.0.0.1:80'];
 
   await fastify.register(cors, {
-    origin,
+    //origin,
     allowedHeaders: [
       'Access-Control-Allow-Origin',
       'Origin',

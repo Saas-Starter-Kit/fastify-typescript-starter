@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "aws-rds",
+  "type": "collection",
+  "presets": {
+    "requestType": "http",
+    "requestUrl": "Comput-MyFar-y8ZlX0Ewykuf-541973145.us-west-1.elb.amazonaws.com"
+  }
+}

@@ -1,0 +1,15 @@
+meta {
+  name: protected
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{host}}/auth/protected
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJfaWQiOjF9LCJpYXQiOjE3MDg2MzEzMzl9.sWE3IpOXkK1ayQalCvLbRyvbNjzY048GNlbbcF58jkM
+}

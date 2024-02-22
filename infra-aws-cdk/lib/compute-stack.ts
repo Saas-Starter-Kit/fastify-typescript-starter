@@ -1,51 +1,44 @@
 import * as path from 'path';
 import { Construct } from 'constructs';
 import { App, Stack, StackProps } from 'aws-cdk-lib';
-import {
-  aws_ecs as ecs,
-  aws_ecs_patterns as ecs_patterns,
-  aws_iam as iam,
-  aws_ec2 as ec2,
-  aws_secretsmanager as secretsmanager
-} from 'aws-cdk-lib';
+import { aws_ecs as ecs, aws_ecs_patterns as ecs_patterns, aws_ec2 as ec2 } from 'aws-cdk-lib';
 
 import { DockerImageAsset } from 'aws-cdk-lib/aws-ecr-assets';
 
 interface ComputeProps extends StackProps {
   vpc: ec2.IVpc;
   //dbSecret: secretsmanager.ISecret;
-  role: iam.IRole;
+  //role: iam.IRole;
+  //securityGroupFargate: ec2.ISecurityGroup;
 }
 
 export class ComputeStack extends Stack {
   constructor(scope: Construct, id: string, props: ComputeProps) {
     super(scope, id, props);
 
-    const { vpc, role } = props;
+    const { vpc } = props;
 
     /* 
         Fargate Service
     */
-
-    //const securityGroupFargate = new ec2.SecurityGroup(this, `SG-Fargate`, {
-    //  vpc
-    //});
-
-    //securityGroupFargate.addIngressRule(ec2.Peer.ipv4('0.0.0.0/0'), ec2.Port.tcp(80));
 
     const cluster = new ecs.Cluster(this, 'Cluster', {
       vpc,
       enableFargateCapacityProviders: true
     });
 
-    const dbName = process.env.DB_NAME || 'postgresDB';
-    const dbUsername = process.env.DB_USERNAME || 'postgresUser';
-    const dbPort = process.env.DB_PORT || '5432';
-    const dbHost = process.env.DB_HOST || 'dbHost';
-
     const dockerAsset = new DockerImageAsset(this, 'MyBuildImage', {
-      directory: path.join(__dirname, '..')
+      directory: path.join(__dirname, '..', '..', 'db-test')
     });
+
+    const DATABASE_URL = process.env.DATABASE_URL || '';
+    const AUTH_SECRET = process.env.AUTH_SECRET || '';
+
+    const DB_NAME = process.env.DB_NAME || 'postgresDB';
+    const DB_USERNAME = process.env.DB_USERNAME || 'postgresUser';
+    const DB_PORT = process.env.DB_PORT || '5432';
+    const DB_HOST = process.env.DB_HOST || 'dbHost';
+    const DB_PASSWORD = process.env.DB_PASSWORD || 'testpass123';
 
     const loadBalancedFargateService = new ecs_patterns.ApplicationLoadBalancedFargateService(
       this,
@@ -54,48 +47,29 @@ export class ComputeStack extends Stack {
         cluster: cluster,
         desiredCount: 1,
         taskImageOptions: {
-          image: ecs.ContainerImage.fromDockerImageAsset(dockerAsset)
-          containerPort: 80
-          //taskRole: role
-          //executionRole: role,
+          image: ecs.ContainerImage.fromDockerImageAsset(dockerAsset),
+          containerPort: 80,
+          //taskRole: role,
           //secrets: {
           //  DB_PASSWORD: ecs.Secret.fromSecretsManager(dbSecret)
           //},
-          //environment: {
-          //  NODE_ENV: 'production',
-          //  PORT: '4000',
-          //  HOST: '0.0.0.0',
-          //  ORIGIN: 'localhost',
-          //  DATABASE_URL:
-          //    'postgresql://iqbal125:O5kdPIKESMf4@ep-restless-bar-a5hnlwzz.us-east-2.aws.neon.tech/test_db?schema=public',
-          //  AUTH_SECRET: '124d'
-          //}
+          environment: {
+            DATABASE_URL,
+            AUTH_SECRET,
+            DB_HOST,
+            DB_PORT,
+            DB_NAME,
+            DB_USERNAME,
+            DB_PASSWORD
+          }
         },
         publicLoadBalancer: true
         //securityGroups: [securityGroupFargate]
       }
     );
 
-    //loadBalancedFargateService.targetGroup.configureHealthCheck({
-    //  path: '/ping'
-    //});
-
-    /* 
-        Bastion Host
-    */
-
-    //let securityGroupBastion = new ec2.SecurityGroup(this, 'bastion-security', {
-    //  vpc
-    //});
-
-    //securityGroupBastion.addEgressRule(ec2.Peer.ipv4('0.0.0.0/0'), ec2.Port.tcp(4000));
-
-    //this.SecurityGroupBastion = securityGroupBastion;
-
-    ////Bastion Host to access DB
-    //new ec2.BastionHostLinux(this, 'BastionHost', {
-    //  vpc,
-    //  securityGroup: securityGroupBastion
-    //});
+    loadBalancedFargateService.targetGroup.configureHealthCheck({
+      path: '/ping'
+    });
   }
 }

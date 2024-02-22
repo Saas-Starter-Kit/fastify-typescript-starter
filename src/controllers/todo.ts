@@ -1,10 +1,11 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { todo } from '../types/todo';
 import { todos } from '../drizzle/schema';
+import { db } from '../drizzle/db';
 
 export async function GetTodos(this: FastifyInstance) {
   try {
-    const todoList = await this.db.select().from(todos).limit(10);
+    const todoList = await db.select().from(todos).limit(10);
     return todoList;
   } catch (err) {
     throw err;
@@ -24,7 +25,7 @@ export async function CreateTodo(this: FastifyInstance, req: CreateTodoRequestI)
   };
 
   try {
-    await this.db.insert(todos).values(data);
+    await db.insert(todos).values(data);
   } catch (err) {
     throw err;
   }

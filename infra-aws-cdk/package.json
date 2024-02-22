@@ -7,7 +7,9 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy": "npx cdk deploy --all --require-approval never",
+    "destroy": "npx cdk destroy --all --force"
   },
   "devDependencies": {
     "@types/node": "20.11.16",
