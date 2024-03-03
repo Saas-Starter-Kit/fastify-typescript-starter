@@ -2,9 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
-COPY drizzle.config.ts tsconfig.json ./
-COPY src ./src
+COPY . .
 
 RUN npm install
 RUN npm run build

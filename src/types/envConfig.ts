@@ -10,6 +10,7 @@ declare module 'fastify' {
     config: {
       ORIGIN: string;
       PORT: number;
+      DATABASE_URL: string;
       AUTH_SECRET: string;
     };
     authenticate: (arg1: FastifyRequest, arg2: FastifyReply) => Promise<void>;
@@ -19,6 +20,7 @@ declare module 'fastify' {
 interface Env {
   PORT: number;
   ORIGIN: string;
+  DATABASE_URL: string;
   AUTH_SECRET: string;
 }
 
@@ -33,6 +35,9 @@ const schema: JSONSchemaType<Env> = {
     PORT: {
       type: 'number',
       default: 4000
+    },
+    DATABASE_URL: {
+      type: 'string'
     },
     AUTH_SECRET: {
       type: 'string'
